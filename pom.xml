@@ -1,0 +1,164 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <!-- $Id$ -->
+    <parent>
+        <groupId>org.primefaces.extensions</groupId>
+        <artifactId>master-pom</artifactId>
+        <version>0.4.0-SNAPSHOT</version>
+        <relativePath />
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.primefaces.extensions</groupId>
+    <artifactId>resources-codemirror</artifactId>
+    <packaging>jar</packaging>
+    <version>0.3.0-SNAPSHOT</version>
+    <name>resources-codemirror</name>
+    <description>
+        <![CDATA[CodeMirror Resources for PrimeFaces Extensions Project for Maven.]]>
+    </description>
+    <url>http://code.google.com/p/primefaces-extensions</url>
+
+    <licenses>
+        <license>
+            <name>Apache 2</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
+
+    <issueManagement>
+        <system>Google Code</system>
+        <url>http://code.google.com/p/primefaces-extensions/issues/list</url>
+    </issueManagement>
+
+    <inceptionYear>2011</inceptionYear>
+
+    <scm>
+        <connection>scm:svn:http://primefaces-extensions.googlecode.com/svn/resources/codemirror/trunk</connection>
+        <developerConnection>scm:svn:https://primefaces-extensions.googlecode.com/svn/resources/codemirror/trunk</developerConnection>
+        <url>http://code.google.com/p/primefaces-extensions/source/browse/#svn/resources/codemirror/trunk</url>
+    </scm>
+
+    <developers>
+        <developer>
+            <id>andraschko</id>
+            <name>Thomas Andraschko</name>
+            <email>zoigln@googlemail.com</email>
+            <roles>
+                <role>Buildmaster</role>
+                <role>Developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
+        <developer>
+            <id>varaksin</id>
+            <name>Oleg Varaksin</name>
+            <email>ovaraksin@googlemail.com</email>
+            <roles>
+                <role>Buildmaster</role>
+                <role>Developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
+    </developers>
+
+    <build>
+        <plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>
+					</archive>
+                    <excludes>
+                        <exclude>**/codemirror/keymap/**</exclude>
+                        <exclude>**/codemirror/lib/**</exclude>
+                        <exclude>**/codemirror/mode/**/LICENSE</exclude>
+                        <exclude>**/codemirror/theme/**</exclude>
+                        <exclude>**/codemirror/LICENSE</exclude>
+                    </excludes>
+				</configuration>
+			</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${resources.dir.uncompressed}</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.basedir}/src/main/resources/META-INF/resources/primefaces-extensions</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+			<plugin>
+                <groupId>org.primefaces.extensions</groupId>
+                <artifactId>resources-optimizer-maven-plugin</artifactId>
+                <configuration>
+					<!-- TODO compress modes directory -->
+					<resourcesSets>
+						<resourcesSet>
+							<includes>
+								<include>codemirror/lib/codemirror.js</include>
+								<include>codemirror/lib/util/*.js</include>
+								<include>codemirror/keymap/*.js</include>
+								<include>codemirror/widget.js</include>
+							</includes>
+							<aggregations>
+								<aggregation>
+									<inputDir>${resources.dir.compressed}</inputDir>
+									<outputFile>${resources.dir.compressed}/codemirror/codemirror.js</outputFile>
+								</aggregation>
+								<aggregation>
+									<withoutCompress>true</withoutCompress>
+									<inputDir>${resources.dir.uncompressed}</inputDir>
+									<outputFile>${resources.dir.uncompressed}/codemirror/codemirror.js</outputFile>
+								</aggregation>
+							</aggregations>
+						</resourcesSet>
+						<resourcesSet>
+							<includes>
+								<include>codemirror/lib/**/*.css</include>
+								<include>codemirror/theme/*.css</include>
+							</includes>
+							<aggregations>
+								<aggregation>
+									<inputDir>${resources.dir.compressed}</inputDir>
+									<outputFile>${resources.dir.compressed}/codemirror/codemirror.css</outputFile>
+								</aggregation>
+								<aggregation>
+									<withoutCompress>true</withoutCompress>
+									<inputDir>${resources.dir.uncompressed}</inputDir>
+									<outputFile>${resources.dir.uncompressed}/codemirror/codemirror.css</outputFile>
+								</aggregation>
+							</aggregations>
+						</resourcesSet>
+					</resourcesSets>
+                </configuration>
+			</plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+    </dependencies>
+
+    <properties>
+      	<resources.dir.compressed>${project.build.directory}/classes/META-INF/resources/primefaces-extensions</resources.dir.compressed>
+      	<resources.dir.uncompressed>${project.build.directory}/classes/META-INF/resources/primefaces-extensions-uncompressed</resources.dir.uncompressed>
+    </properties>
+</project>
