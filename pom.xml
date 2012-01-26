@@ -32,7 +32,7 @@
         <url>http://code.google.com/p/primefaces-extensions/issues/list</url>
     </issueManagement>
 
-    <inceptionYear>2011</inceptionYear>
+    <inceptionYear>2012</inceptionYear>
 
     <scm>
         <connection>scm:svn:http://primefaces-extensions.googlecode.com/svn/resources/codemirror/trunk</connection>
@@ -149,16 +149,4 @@
 			</plugin>
         </plugins>
     </build>
-
-    <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-        </dependency>
-    </dependencies>
-
-    <properties>
-      	<resources.dir.compressed>${project.build.directory}/classes/META-INF/resources/primefaces-extensions</resources.dir.compressed>
-      	<resources.dir.uncompressed>${project.build.directory}/classes/META-INF/resources/primefaces-extensions-uncompressed</resources.dir.uncompressed>
-    </properties>
 </project>
