@@ -78,6 +78,7 @@
                         <exclude>**/codemirror/mode/**/LICENSE</exclude>
                         <exclude>**/codemirror/theme/**</exclude>
                         <exclude>**/codemirror/LICENSE</exclude>
+                        <exclude>**/codemirror/changes.txt</exclude>
                     </excludes>
 				</configuration>
 			</plugin>
