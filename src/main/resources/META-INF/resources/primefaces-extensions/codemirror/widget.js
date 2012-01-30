@@ -9,6 +9,11 @@ PrimeFacesExt.widget.CodeMirror = function(cfg) {
 	this.jqId = PrimeFaces.escapeClientId(this.id);
 	this.jq = $(this.jqId);
 
+	//remove old instance if available
+	if (this.jq.next().hasClass('CodeMirror')) {
+		this.jq.next().remove();
+	}
+
 	this.options = this.cfg;
 
 	this.options.onFocus = $.proxy(function() { this.fireEvent('focus'); }, this);
@@ -20,7 +25,7 @@ PrimeFacesExt.widget.CodeMirror = function(cfg) {
 	this.options.onChange =
 		$.proxy(function(from, to, text, next) {
 			//set value to textarea
-			this.jq.val(this.instance.getValue());
+			this.instance.save();
 			
 			//fire event
 			this.fireEvent('change'); 
