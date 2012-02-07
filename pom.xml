@@ -108,9 +108,6 @@
                 <artifactId>resources-optimizer-maven-plugin</artifactId>
                 <configuration>
 					<resourcesSets>
-                        <resourcesSet>
-                            <inputDir>${resources.dir.compressed}/codemirror/mode</inputDir>
-                        </resourcesSet>
 						<resourcesSet>
 							<includes>
 								<include>codemirror/lib/codemirror.js</include>
