@@ -1,6 +1,7 @@
 /**
  * PrimeFaces Extensions CodeMirror Widget
  * 
+ * @author Thomas Andraschko
  * @constructor
  */
 PrimeFacesExt.widget.CodeMirror = function(cfg) {
@@ -41,8 +42,9 @@ PrimeFaces.extend(PrimeFacesExt.widget.CodeMirror, PrimeFaces.widget.BaseWidget)
 /**
  * This method fires an event if the behavior was defined.
  *
+ * @author Thomas Andraschko
  * @param {string} eventName The name of the event.
- * @protected
+ * @private
  */
 PrimeFacesExt.widget.CodeMirror.prototype.fireEvent = function(eventName) {
 	if (this.cfg.behaviors) {
