@@ -12,6 +12,9 @@ PrimeFacesExt.widget.CodeMirror = PrimeFaces.widget.BaseWidget.extend({
 	 */
 	init : function(cfg) {
 		this._super(cfg);
+
+		this.form = this.jq.closest("form");
+		this.formId = this.form[0].id;
 	
 		//remove old instance if available
 		if (this.jq.next().hasClass('CodeMirror')) {
@@ -36,7 +39,106 @@ PrimeFacesExt.widget.CodeMirror = PrimeFaces.widget.BaseWidget.extend({
 			}, this);
 	
 		this.instance = CodeMirror.fromTextArea(this.jq[0], this.options);
+
+		this.instance.widgetInstance = this;
 	},
+
+	complete : function() {
+	    this.suggestions = null;
+	    this.token = null;
+
+	    // Find the token at the cursor
+	    var cursor = this.instance.getCursor();
+	    var token = this.instance.getTokenAt(cursor);
+	    var tokenProperty = token;
+
+	    // If it's not a 'word-style' token, ignore the token.
+	    if (!/^[\w$_]*$/.test(token.string)) {
+	      token = tokenProperty = {
+	    		  start: cursor.ch,
+	    		  end: cursor.ch,
+	    		  string: "",
+	    		  state: token.state,
+	    		  className: token.string == "." ? "property" : null};
+	    }
+
+	    // If it is a property, find out what it is a property of.
+	    while (tokenProperty.className == "property") {
+	    	tokenProperty = this.instance.getTokenAt({ line: cursor.line, ch: tokenProperty.start });
+	    	
+	    	if (tokenProperty.string != ".") {
+	    		return;
+	    	}
+
+	    	tokenProperty = this.instance.getTokenAt({ line: cursor.line, ch: tokenProperty.start });
+
+	    	if (!context) {
+	    		var context = [];
+	    	}
+
+	    	context.push(tokenProperty);
+	    }
+
+	    this.token = token;
+	    this.search(token.string);
+	},
+
+	search : function(value) {
+        var _self = this;
+
+        //start callback
+        if (this.cfg.onstart) {
+            this.cfg.onstart.call(this, value);
+        }
+
+        var options = {
+            source: this.id,
+            update: this.id,
+            formId: this.formId,
+            onsuccess: function(responseXML) {
+
+                var xmlDoc = $(responseXML.documentElement);
+                var updates = xmlDoc.find("update");
+
+                for (var i = 0; i < updates.length; i++) {
+                    var update = updates.eq(i);
+                    var id = update.attr('id');
+                    var data = update.text();
+
+                    if (id == _self.id) {
+                    	_self.suggestions = data.split(',');
+
+                    	CodeMirror.simpleHint(_self.instance, PrimeFacesExt.widget.CodeMirror.getSuggestions);
+                    } else {
+                        PrimeFaces.ajax.AjaxUtils.updateElement.call(this, id, data);
+                    }
+                }
+
+                PrimeFaces.ajax.AjaxUtils.handleResponse.call(this, xmlDoc);
+
+                return true;
+            }
+        };
+
+        //complete callback
+        if (this.cfg.oncomplete) {
+            options.oncomplete = this.cfg.oncomplete;
+        }
+
+        //process
+        options.process = this.cfg.process ? this.id + ' ' + this.cfg.process : this.id;
+
+        if (this.cfg.global === false) {
+            options.global = false;
+        }
+
+        var params = {};
+        params[this.id + '_query'] = encodeURIComponent(value);
+
+        options.params = params;
+
+        PrimeFaces.ajax.AjaxRequest(options);
+    },
 
 	/**
 	 * This method fires an event if the behavior was defined.
@@ -64,3 +166,12 @@ PrimeFacesExt.widget.CodeMirror = PrimeFaces.widget.BaseWidget.extend({
 	    return this.instance;
 	}
 });
+
+PrimeFacesExt.widget.CodeMirror.getSuggestions = function(editor) {
+    return {
+    	list: editor.widgetInstance.suggestions,
+        from: { line: editor.getCursor().line, ch: editor.widgetInstance.token.start },
+        to: { line: editor.getCursor().line, ch: editor.widgetInstance.token.end }
+    };
+};
+
