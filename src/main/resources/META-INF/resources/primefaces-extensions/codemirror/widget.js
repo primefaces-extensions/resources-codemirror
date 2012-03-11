@@ -106,7 +106,13 @@ PrimeFacesExt.widget.CodeMirror = PrimeFaces.widget.BaseWidget.extend({
                     var data = update.text();
 
                     if (id == _self.id) {
-                    	_self.suggestions = data.split(',');
+                    	_self.suggestions = [];
+                    	
+                    	var parsedSuggestions = $(data).filter(function() { return $(this).is('ul') }).children();
+                    	
+                    	parsedSuggestions.each(function() {
+                    		_self.suggestions.push($(this).html());
+                    	});
 
                     	CodeMirror.simpleHint(_self.instance, PrimeFacesExt.widget.CodeMirror.getSuggestions);
                     } else {
@@ -174,4 +180,3 @@ PrimeFacesExt.widget.CodeMirror.getSuggestions = function(editor) {
         to: { line: editor.getCursor().line, ch: editor.widgetInstance.token.end }
     };
 };
-
