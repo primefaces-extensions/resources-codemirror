@@ -78,12 +78,27 @@ PrimeFacesExt.widget.CodeMirror = PrimeFaces.widget.BaseWidget.extend({
 
 	    	context.push(tokenProperty);
 	    }
+	    
+	    var contextString = null;
+	    if (context) {
+	    	contextString = '';
+
+	    	for (var i = 0; i < context.length; i++) {
+	    		var currentContext = context[i];
+
+	    		if (i > 0) {
+	    			contextString = contextString + '.';
+	    		}
+
+	    		contextString = contextString + currentContext.string;
+	    	}
+	    }
 
 	    this.token = token;
-	    this.search(token.string);
+	    this.search(token.string, contextString);
 	},
 
-	search : function(value) {
+	search : function(value, context) {
         var _self = this;
 
         //start callback
@@ -139,7 +154,8 @@ PrimeFacesExt.widget.CodeMirror = PrimeFaces.widget.BaseWidget.extend({
         }
 
         var params = {};
-        params[this.id + '_query'] = encodeURIComponent(value);
+        params[this.id + '_token'] = encodeURIComponent(value);
+        params[this.id + '_context'] = encodeURIComponent(context);
 
         options.params = params;
 
