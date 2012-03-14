@@ -110,8 +110,12 @@ PrimeFacesExt.widget.CodeMirror = PrimeFaces.widget.BaseWidget.extend({
             source: this.id,
             update: this.id,
             formId: this.formId,
-            onsuccess: function(responseXML) {
+            onsuccess: function(responseXML, status, xhr) {
 
+            	if (_self.cfg.onsuccess) {
+            		_self.cfg.onsuccess.call(this, responseXML, status, xhr);
+            	}
+            	
                 var xmlDoc = $(responseXML.documentElement);
                 var updates = xmlDoc.find("update");
 
@@ -146,6 +150,11 @@ PrimeFacesExt.widget.CodeMirror = PrimeFaces.widget.BaseWidget.extend({
             options.oncomplete = this.cfg.oncomplete;
         }
 
+        //error callback
+        if (this.cfg.onerror) {
+            options.onerror = this.cfg.onerror;
+        }
+        
         //process
         options.process = this.cfg.process ? this.id + ' ' + this.cfg.process : this.id;
 
