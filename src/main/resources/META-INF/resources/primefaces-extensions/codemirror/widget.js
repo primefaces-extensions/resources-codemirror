@@ -162,11 +162,10 @@ PrimeFacesExt.widget.CodeMirror = PrimeFaces.widget.BaseWidget.extend({
             options.global = false;
         }
 
-        var params = {};
-        params[this.id + '_token'] = encodeURIComponent(value);
-        params[this.id + '_context'] = encodeURIComponent(context);
-
-        options.params = params;
+        options.params = [
+	        {name: this.id + '_token', value: encodeURIComponent(value) },
+	        {name: this.id + '_context', value: encodeURIComponent(context) }
+        ];
 
         PrimeFaces.ajax.AjaxRequest(options);
     },
@@ -182,7 +181,7 @@ PrimeFacesExt.widget.CodeMirror = PrimeFaces.widget.BaseWidget.extend({
 			var callback = this.cfg.behaviors[eventName];
 		    if (callback) {
 		    	var ext = {
-		    			params: {}
+		    			params: []
 		    	};
 	
 		    	callback.call(this, null, ext);
