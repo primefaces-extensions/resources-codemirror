@@ -33,14 +33,27 @@ PrimeFacesExt.widget.CodeMirror = PrimeFaces.widget.BaseWidget.extend({
 			$.proxy(function(from, to, text, next) {
 				//set value to textarea
 				this.instance.save();
-				
+
 				//fire event
 				this.fireEvent('change'); 
 			}, this);
 	
-		this.instance = CodeMirror.fromTextArea(this.jq[0], this.options);
+		if (this.jq.is(':visible')) {
+			this.instance = CodeMirror.fromTextArea(this.jq[0], this.options);
+			this.instance.widgetInstance = this;
+        } else {
+            var hiddenParent = this.jq.parents('.ui-hidden-container:first');
+            var hiddenParentWidget = hiddenParent.data('widget');
 
-		this.instance.widgetInstance = this;
+            if (hiddenParentWidget) {
+                hiddenParentWidget.addOnshowHandler($.proxy(function() {
+                	if (!this.instance && this.jq.is(':visible')) {
+	            		this.instance = CodeMirror.fromTextArea(this.jq[0], this.options);
+	            		this.instance.widgetInstance = this;
+                	}
+                }, this));
+            }
+        }
 	},
 
 	complete : function() {
