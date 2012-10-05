@@ -39,8 +39,7 @@ PrimeFacesExt.widget.CodeMirror = PrimeFaces.widget.BaseWidget.extend({
 			}, this);
 	
 		if (this.jq.is(':visible')) {
-			this.instance = CodeMirror.fromTextArea(this.jq[0], this.options);
-			this.instance.widgetInstance = this;
+			this.initialize();
         } else {
             var hiddenParent = this.jq.parents('.ui-hidden-container:first');
             var hiddenParentWidget = hiddenParent.data('widget');
@@ -48,14 +47,18 @@ PrimeFacesExt.widget.CodeMirror = PrimeFaces.widget.BaseWidget.extend({
             if (hiddenParentWidget) {
                 hiddenParentWidget.addOnshowHandler($.proxy(function() {
                 	if (!this.instance && this.jq.is(':visible')) {
-	            		this.instance = CodeMirror.fromTextArea(this.jq[0], this.options);
-	            		this.instance.widgetInstance = this;
+	            		this.initialize();
                 	}
                 }, this));
             }
         }
 	},
 
+	initialize : function() {
+		this.instance = CodeMirror.fromTextArea(this.jq[0], this.options);
+		this.instance.widgetInstance = this;
+	},
+	
 	complete : function() {
 	    this.suggestions = null;
 	    this.token = null;
