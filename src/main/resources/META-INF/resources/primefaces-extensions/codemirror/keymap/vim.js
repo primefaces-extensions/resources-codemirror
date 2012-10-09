@@ -70,7 +70,7 @@
     for (var prop in o) if (o.hasOwnProperty(prop)) f(prop, o[prop]);
   }
   function iterList(l, f) {
-    for (var i in l) f(l[i]);
+    for (var i = 0; i < l.length; ++i) f(l[i]);
   }
   function toLetter(ch) {
     // T -> t, Shift-T -> T, '*' -> *, "Space" -> " "
@@ -84,10 +84,6 @@
   }
   var SPECIAL_SYMBOLS = "~`!@#$%^&*()_-+=[{}]\\|/?.,<>:;\"\'1234567890";
   function toCombo(ch) {
-	if (typeof(ch) == "function") {
-		return null;
-	}
-
     // t -> T, T -> Shift-T, * -> '*', " " -> "Space"
     if (ch == " ") return "Space";
     var specialIdx = SPECIAL_SYMBOLS.indexOf(ch);
@@ -233,7 +229,8 @@
     else f(prompt(shortText, ""));
   }
   function showAlert(cm, text) {
-    if (cm.openDialog) cm.openDialog(CodeMirror.htmlEscape(text) + " <button type=button>OK</button>");
+    var esc = text.replace(/[<&]/, function(ch) { return ch == "<" ? "&lt;" : "&amp;"; });
+    if (cm.openDialog) cm.openDialog(esc + " <button type=button>OK</button>");
     else alert(text);
   }
 
@@ -321,13 +318,12 @@
   };
 
   // standard mode switching
-  iterList(["d", "t", "T", "f", "F", "c", "r"],
-      function (ch) {
-        CodeMirror.keyMap.vim[toCombo(ch)] = function (cm) {
-          cm.setOption("keyMap", "vim-prefix-" + ch);
-          emptyBuffer();
-        };
-      });
+  iterList(["d", "t", "T", "f", "F", "c", "r"], function (ch) {
+    CodeMirror.keyMap.vim[toCombo(ch)] = function (cm) {
+      cm.setOption("keyMap", "vim-prefix-" + ch);
+      emptyBuffer();
+    };
+  });
 
   function addCountBindings(keyMap) {
     // Add bindings for number keys
@@ -506,13 +502,16 @@
     setupPrefixBindingForKey(toCombo(ch));
     setupPrefixBindingForKey(toCombo(ch.toLowerCase()));
   }
-  iterList(SPECIAL_SYMBOLS, function (ch) {
-    setupPrefixBindingForKey(toCombo(ch));
-  });
+  for (var i = 0; i < SPECIAL_SYMBOLS.length; ++i) {
+    setupPrefixBindingForKey(toCombo(SPECIAL_SYMBOLS.charAt(i)));
+  }
   setupPrefixBindingForKey("Space");
 
   CodeMirror.keyMap["vim-prefix-y"] = {
-    "Y": countTimes(function(cm) { pushInBuffer("\n"+cm.getLine(cm.getCursor().line+yank)); yank++; }),
+    "Y": countTimes(function(cm) {
+      pushInBuffer("\n"+cm.getLine(cm.getCursor().line+yank)); yank++;
+      cm.setOption("keyMap", "vim");
+    }),
     "'": function(cm) {cm.setOption("keyMap", "vim-prefix-y'"); emptyBuffer();},
     nofallthrough: true, style: "fat-cursor"
   };
@@ -645,7 +644,7 @@
   };
 
   // Map our movement actions each operator and non-operational movement
-  motionList.forEach(function(key, index, array) {
+  iterList(motionList, function(key, index, array) {
     CodeMirror.keyMap['vim-prefix-d'][key] = function(cm) {
       // Get our selected range
       var start = cm.getCursor();
@@ -695,7 +694,7 @@
   });
 
   var nums = [1,2,3,4,5,6,7,8,9];
-  nums.forEach(function(key, index, array) {
+  iterList(nums, function(key, index, array) {
     CodeMirror.keyMap['vim'][key] = function (cm) {
       reptTimes = (reptTimes * 10) + key;
     };
@@ -713,7 +712,7 @@
   // Create our keymaps for each operator and make xa and xi where x is an operator
   // change to the corrosponding keymap
   var operators = ['d', 'y', 'c'];
-  operators.forEach(function(key, index, array) {
+  iterList(operators, function(key, index, array) {
     CodeMirror.keyMap['vim-prefix-'+key+'a'] = {
       auto: 'vim', nofallthrough: true, style: "fat-cursor"
     };
