@@ -35,9 +35,9 @@
     <inceptionYear>2012</inceptionYear>
 
     <scm>
-        <connection>scm:svn:http://primefaces-extensions.googlecode.com/svn/resources/codemirror/trunk</connection>
-        <developerConnection>scm:svn:https://primefaces-extensions.googlecode.com/svn/resources/codemirror/trunk</developerConnection>
-        <url>http://code.google.com/p/primefaces-extensions/source/browse/#svn/resources/codemirror/trunk</url>
+        <connection>scm:git:git@github.com:primefaces-extensions/resources-codemirror.git</connection>
+        <developerConnection>scm:git:git@github.com:primefaces-extensions/resources-codemirror.git</developerConnection>
+        <url>https://github.com/primefaces-extensions/resources-codemirror</url>
     </scm>
 
     <developers>
