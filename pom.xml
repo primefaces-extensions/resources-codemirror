@@ -4,7 +4,6 @@
         <groupId>org.primefaces.extensions</groupId>
         <artifactId>master-pom</artifactId>
         <version>1.5.0-SNAPSHOT</version>
-        <relativePath />
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -16,52 +15,12 @@
     <description>
         <![CDATA[CodeMirror Resources for PrimeFaces Extensions Project for Maven.]]>
     </description>
-    <url>http://code.google.com/p/primefaces-extensions</url>
-
-    <licenses>
-        <license>
-            <name>Apache 2</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-            <distribution>repo</distribution>
-            <comments>A business-friendly OSS license</comments>
-        </license>
-    </licenses>
-
-    <issueManagement>
-        <system>Google Code</system>
-        <url>http://code.google.com/p/primefaces-extensions/issues/list</url>
-    </issueManagement>
-
-    <inceptionYear>2012</inceptionYear>
 
     <scm>
         <connection>scm:git:git@github.com:primefaces-extensions/resources-codemirror.git</connection>
         <developerConnection>scm:git:git@github.com:primefaces-extensions/resources-codemirror.git</developerConnection>
         <url>https://github.com/primefaces-extensions/resources-codemirror</url>
     </scm>
-
-    <developers>
-        <developer>
-            <id>andraschko</id>
-            <name>Thomas Andraschko</name>
-            <email>zoigln@googlemail.com</email>
-            <roles>
-                <role>Buildmaster</role>
-                <role>Developer</role>
-            </roles>
-            <timezone>+1</timezone>
-        </developer>
-        <developer>
-            <id>varaksin</id>
-            <name>Oleg Varaksin</name>
-            <email>ovaraksin@googlemail.com</email>
-            <roles>
-                <role>Buildmaster</role>
-                <role>Developer</role>
-            </roles>
-            <timezone>+1</timezone>
-        </developer>
-    </developers>
 
     <build>
         <plugins>
