@@ -1,29 +1,30 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <!-- $Id$ -->
-    <parent>
-        <groupId>org.primefaces.extensions</groupId>
-        <artifactId>master-pom</artifactId>
-        <version>1.5.0-SNAPSHOT</version>
-    </parent>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<!-- $Id$ -->
+	<parent>
+		<groupId>org.primefaces.extensions</groupId>
+		<artifactId>master-pom</artifactId>
+		<version>1.5.0-SNAPSHOT</version>
+	</parent>
 
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>org.primefaces.extensions</groupId>
-    <artifactId>resources-codemirror</artifactId>
-    <packaging>jar</packaging>
-    <version>0.6.3-SNAPSHOT</version>
-    <name>resources-codemirror</name>
-    <description>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.primefaces.extensions</groupId>
+	<artifactId>resources-codemirror</artifactId>
+	<packaging>jar</packaging>
+	<version>0.6.3-SNAPSHOT</version>
+	<name>resources-codemirror</name>
+	<description>
         <![CDATA[CodeMirror Resources for PrimeFaces Extensions Project for Maven.]]>
-    </description>
+	</description>
 
-    <scm>
-        <connection>scm:git:git@github.com:primefaces-extensions/resources-codemirror.git</connection>
-        <developerConnection>scm:git:git@github.com:primefaces-extensions/resources-codemirror.git</developerConnection>
-        <url>https://github.com/primefaces-extensions/resources-codemirror</url>
-    </scm>
+	<scm>
+		<connection>scm:git:git@github.com:primefaces-extensions/resources-codemirror.git</connection>
+		<developerConnection>scm:git:git@github.com:primefaces-extensions/resources-codemirror.git</developerConnection>
+		<url>https://github.com/primefaces-extensions/resources-codemirror</url>
+	</scm>
 
-    <build>
-        <plugins>
+	<build>
+		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
@@ -31,41 +32,41 @@
 					<archive>
 						<manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>
 					</archive>
-                    <excludes>
-                        <exclude>**/codemirror/keymap/**</exclude>
-                        <exclude>**/codemirror/lib/**</exclude>
-                        <exclude>**/codemirror/mode/**/LICENSE</exclude>
-                        <exclude>**/codemirror/theme/**</exclude>
-                        <exclude>**/codemirror/LICENSE</exclude>
-                        <exclude>**/codemirror/changes.txt</exclude>
-                    </excludes>
+					<excludes>
+						<exclude>**/codemirror/keymap/**</exclude>
+						<exclude>**/codemirror/lib/**</exclude>
+						<exclude>**/codemirror/mode/**/LICENSE</exclude>
+						<exclude>**/codemirror/theme/**</exclude>
+						<exclude>**/codemirror/LICENSE</exclude>
+						<exclude>**/codemirror/changes.txt</exclude>
+					</excludes>
 				</configuration>
 			</plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>copy-resources</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${resources.dir.uncompressed}</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>${project.basedir}/src/main/resources/META-INF/resources/primefaces-extensions</directory>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
 			<plugin>
-                <groupId>org.primefaces.extensions</groupId>
-                <artifactId>resources-optimizer-maven-plugin</artifactId>
-                <configuration>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${resources.dir.uncompressed}</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${project.basedir}/src/main/resources/META-INF/resources/primefaces-extensions</directory>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.primefaces.extensions</groupId>
+				<artifactId>resources-optimizer-maven-plugin</artifactId>
+				<configuration>
 					<resourcesSets>
 						<resourcesSet>
 							<includes>
@@ -104,8 +105,8 @@
 							</aggregations>
 						</resourcesSet>
 					</resourcesSets>
-                </configuration>
+				</configuration>
 			</plugin>
-        </plugins>
-    </build>
+		</plugins>
+	</build>
 </project>
