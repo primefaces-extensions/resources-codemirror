@@ -37,21 +37,8 @@ PrimeFacesExt.widget.CodeMirror = PrimeFaces.widget.BaseWidget.extend({
 				//fire event
 				this.fireEvent('change'); 
 			}, this);
-	
-		if (this.jq.is(':visible')) {
-			this.initialize();
-        } else {
-            var hiddenParent = this.jq.parents('.ui-hidden-container:first');
-            var hiddenParentWidget = hiddenParent.data('widget');
 
-            if (hiddenParentWidget) {
-                hiddenParentWidget.addOnshowHandler($.proxy(function() {
-                	if (!this.instance && this.jq.is(':visible')) {
-	            		this.initialize();
-                	}
-                }, this));
-            }
-        }
+		PrimeFacesExt.handleInitialize(this, this.initialize);
 	},
 
 	initialize : function() {
