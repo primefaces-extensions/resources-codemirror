@@ -98,10 +98,10 @@ PrimeFacesExt.widget.CodeMirror = PrimeFaces.widget.BaseWidget.extend({
 	    }
 
 	    this.token = token;
-	    this.search(token.string, contextString);
+	    this.search(token.string, contextString, cursor.line, cursor.ch);
 	},
 
-	search : function(value, context) {
+	search : function(value, context, line, column) {
         var _self = this;
 
         //start callback
@@ -167,7 +167,9 @@ PrimeFacesExt.widget.CodeMirror = PrimeFaces.widget.BaseWidget.extend({
 
         options.params = [
 	        {name: this.id + '_token', value: encodeURIComponent(value) },
-	        {name: this.id + '_context', value: encodeURIComponent(context) }
+	        {name: this.id + '_context', value: encodeURIComponent(context) },
+            {name: this.id + '_line', value: encodeURIComponent(line) },
+            {name: this.id + '_column', value: encodeURIComponent(column) }
         ];
 
         PrimeFaces.ajax.AjaxRequest(options);
