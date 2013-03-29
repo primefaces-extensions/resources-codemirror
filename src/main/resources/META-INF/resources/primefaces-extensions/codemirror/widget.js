@@ -12,9 +12,6 @@ PrimeFacesExt.widget.CodeMirror = PrimeFaces.widget.BaseWidget.extend({
 	 */
 	init : function(cfg) {
 		this._super(cfg);
-
-		this.form = this.jq.closest("form");
-		this.formId = this.form[0].id;
 	
 		//remove old instance if available
 		if (this.jq.next().hasClass('CodeMirror')) {
@@ -102,6 +99,12 @@ PrimeFacesExt.widget.CodeMirror = PrimeFaces.widget.BaseWidget.extend({
 	},
 
 	search : function(value, context, line, column) {
+		// lazy get parent form
+		if (!this.form) {
+			this.form = this.jq.closest("form");
+			this.formId = this.form[0].id;
+		}
+
         var _self = this;
 
         //start callback
