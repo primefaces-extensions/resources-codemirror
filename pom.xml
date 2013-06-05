@@ -10,7 +10,7 @@
 	<groupId>org.primefaces.extensions</groupId>
 	<artifactId>resources-codemirror</artifactId>
 	<packaging>jar</packaging>
-	<version>0.7.1-SNAPSHOT</version>
+	<version>0.7.1</version>
 	<name>resources-codemirror</name>
 	<description>
         <![CDATA[CodeMirror Resources for PrimeFaces Extensions Project for Maven.]]>
@@ -20,7 +20,8 @@
 		<connection>scm:git:git@github.com:primefaces-extensions/resources-codemirror.git</connection>
 		<developerConnection>scm:git:git@github.com:primefaces-extensions/resources-codemirror.git</developerConnection>
 		<url>https://github.com/primefaces-extensions/resources-codemirror</url>
-	</scm>
+	  <tag>resources-codemirror-0.7.1</tag>
+  </scm>
 
 	<build>
 		<plugins>
