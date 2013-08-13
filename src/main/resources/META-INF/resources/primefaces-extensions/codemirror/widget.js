@@ -3,7 +3,7 @@
  * 
  * @author Thomas Andraschko
  */
-PrimeFacesExt.widget.CodeMirror = PrimeFaces.widget.BaseWidget.extend({
+PrimeFacesExt.widget.CodeMirror = PrimeFaces.widget.DeferredWidget.extend({
 	
 	/**
 	 * Initializes the widget.
@@ -35,10 +35,10 @@ PrimeFacesExt.widget.CodeMirror = PrimeFaces.widget.BaseWidget.extend({
 				this.fireEvent('change'); 
 			}, this);
 
-		PrimeFacesExt.handleInitialize(this, this.initialize);
+		this.renderDeferred();
 	},
 
-	initialize : function() {
+	_render : function() {
 		this.instance = CodeMirror.fromTextArea(this.jq[0], this.options);
 		this.instance.widgetInstance = this;
 	},
