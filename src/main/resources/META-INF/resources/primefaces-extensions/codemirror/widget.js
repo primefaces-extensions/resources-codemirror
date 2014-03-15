@@ -105,7 +105,7 @@ PrimeFacesExt.widget.CodeMirror = PrimeFaces.widget.DeferredWidget.extend({
 			this.formId = this.form[0].id;
 		}
 
-        var _self = this;
+        var $this = this;
 
         //start callback
         if (this.cfg.onstart) {
@@ -117,36 +117,26 @@ PrimeFacesExt.widget.CodeMirror = PrimeFaces.widget.DeferredWidget.extend({
             update: this.id,
             formId: this.formId,
             onsuccess: function(responseXML, status, xhr) {
-
-            	if (_self.cfg.onsuccess) {
-            		_self.cfg.onsuccess.call(this, responseXML, status, xhr);
+                
+            	if ($this.cfg.onsuccess) {
+            		$this.cfg.onsuccess.call(this, responseXML, status, xhr);
             	}
-            	
-                var xmlDoc = $(responseXML.documentElement);
-                var updates = xmlDoc.find("update");
-
-                for (var i = 0; i < updates.length; i++) {
-                    var update = updates.eq(i);
-                    var id = update.attr('id');
-                    var data = update.text();
-
-                    if (id == _self.id) {
-                    	_self.suggestions = [];
+                
+                PrimeFaces.ajax.Response.handle(responseXML, status, xhr, {
+                    widget: $this,
+                    handle: function(content) {
+                    	$this.suggestions = [];
                     	
-                    	var parsedSuggestions = $(data).filter(function() { return $(this).is('ul') }).children();
+                    	var parsedSuggestions = $(content).filter(function() { return $(this).is('ul') }).children();
                     	
                     	parsedSuggestions.each(function() {
-                    		_self.suggestions.push($(this).html());
+                    		$this.suggestions.push($(this).html());
                     	});
 
-                    	CodeMirror.simpleHint(_self.instance, PrimeFacesExt.widget.CodeMirror.getSuggestions);
-                    } else {
-                        PrimeFaces.ajax.AjaxUtils.updateElement.call(this, id, data);
+                    	CodeMirror.simpleHint($this.instance, PrimeFacesExt.widget.CodeMirror.getSuggestions);
                     }
-                }
-
-                PrimeFaces.ajax.AjaxUtils.handleResponse.call(this, xmlDoc);
-
+                });
+                
                 return true;
             }
         };
@@ -188,11 +178,11 @@ PrimeFacesExt.widget.CodeMirror = PrimeFaces.widget.DeferredWidget.extend({
 		if (this.cfg.behaviors) {
 			var callback = this.cfg.behaviors[eventName];
 		    if (callback) {
-		    	var ext = {
+		    	var options = {
 		    			params: []
 		    	};
 	
-		    	callback.call(this, null, ext);
+		    	callback.call(this, options);
 		    }
 		}
 	},
