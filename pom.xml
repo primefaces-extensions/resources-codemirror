@@ -42,29 +42,9 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>copy-resources</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${resources.dir.uncompressed}</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>${project.basedir}/src/main/resources/META-INF/resources/primefaces-extensions</directory>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
                 <groupId>org.primefaces.extensions</groupId>
                 <artifactId>resources-optimizer-maven-plugin</artifactId>
+                <version>2.0.0-SNAPSHOT</version>
                 <configuration>
                     <resourcesSets>
                         <resourcesSet>
@@ -78,11 +58,7 @@
                                 <aggregation>
                                     <inputDir>${resources.dir.compressed}</inputDir>
                                     <outputFile>${resources.dir.compressed}/codemirror/codemirror.js</outputFile>
-                                </aggregation>
-                                <aggregation>
-                                    <withoutCompress>true</withoutCompress>
-                                    <inputDir>${resources.dir.uncompressed}</inputDir>
-                                    <outputFile>${resources.dir.uncompressed}/codemirror/codemirror.js</outputFile>
+                                    <withoutCompress>${withoutCompress}</withoutCompress>
                                 </aggregation>
                             </aggregations>
                         </resourcesSet>
@@ -95,11 +71,7 @@
                                 <aggregation>
                                     <inputDir>${resources.dir.compressed}</inputDir>
                                     <outputFile>${resources.dir.compressed}/codemirror/codemirror.css</outputFile>
-                                </aggregation>
-                                <aggregation>
-                                    <withoutCompress>true</withoutCompress>
-                                    <inputDir>${resources.dir.uncompressed}</inputDir>
-                                    <outputFile>${resources.dir.uncompressed}/codemirror/codemirror.css</outputFile>
+                                    <withoutCompress>${withoutCompress}</withoutCompress>
                                 </aggregation>
                             </aggregations>
                         </resourcesSet>
@@ -108,4 +80,9 @@
             </plugin>
         </plugins>
     </build>
+    
+    <properties>
+        <sourceMap.outputDir>${project.basedir}/src/sourcemap/${project.version}/</sourceMap.outputDir>
+        <sourceMap.sourceMapRoot>https://raw.githubusercontent.com/primefaces-extensions/resources-codemirror/master/src/sourcemap/</sourceMap.sourceMapRoot>
+    </properties>
 </project>
