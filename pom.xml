@@ -9,7 +9,7 @@
     <groupId>org.primefaces.extensions</groupId>
     <artifactId>resources-codemirror</artifactId>
     <packaging>jar</packaging>
-    <version>4.0.0-SNAPSHOT</version>
+    <version>4.1.0-SNAPSHOT</version>
     <name>resources-codemirror</name>
     <description>
         <![CDATA[CodeMirror Resources for PrimeFaces Extensions Project for Maven.]]>
