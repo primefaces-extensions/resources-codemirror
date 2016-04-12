@@ -1,38 +1,38 @@
 /**
  * PrimeFaces Extensions CodeMirror Widget
- * 
+ *
  * @author Thomas Andraschko
  */
-PrimeFacesExt.widget.CodeMirror = PrimeFaces.widget.DeferredWidget.extend({
-	
+PrimeFaces.widget.ExtCodeMirror = PrimeFaces.widget.DeferredWidget.extend({
+
 	/**
 	 * Initializes the widget.
-	 * 
+	 *
 	 * @param {object} cfg The widget configuration.
 	 */
 	init : function(cfg) {
 		this._super(cfg);
-	
+
 		//remove old instance if available
 		if (this.jq.next().hasClass('CodeMirror')) {
 			this.jq.next().remove();
 		}
-	
+
 		this.options = this.cfg;
-	
+
 		this.options.onFocus = $.proxy(function() { this.fireEvent('focus'); }, this);
 		this.options.onBlur = $.proxy(function() { this.fireEvent('blur'); }, this);
-	
+
 		this.options.onHighlightComplete =
 			$.proxy(function(codeMirror) { this.fireEvent('highlightComplete'); }, this);
-	
+
 		this.options.onChange =
 			$.proxy(function(from, to, text, next) {
 				//set value to textarea
 				this.instance.save();
 
 				//fire event
-				this.fireEvent('change'); 
+				this.fireEvent('change');
 			}, this);
 
 		this.renderDeferred();
@@ -42,7 +42,7 @@ PrimeFacesExt.widget.CodeMirror = PrimeFaces.widget.DeferredWidget.extend({
 		this.instance = CodeMirror.fromTextArea(this.jq[0], this.options);
 		this.instance.widgetInstance = this;
 	},
-	
+
 	complete : function() {
 	    this.suggestions = null;
 	    this.token = null;
@@ -65,7 +65,7 @@ PrimeFacesExt.widget.CodeMirror = PrimeFaces.widget.DeferredWidget.extend({
 	    // If it is a property, find out what it is a property of.
 	    while (tokenProperty.className == "property") {
 	    	tokenProperty = this.instance.getTokenAt({ line: cursor.line, ch: tokenProperty.start });
-	    	
+
 	    	if (tokenProperty.string != ".") {
 	    		return;
 	    	}
@@ -78,7 +78,7 @@ PrimeFacesExt.widget.CodeMirror = PrimeFaces.widget.DeferredWidget.extend({
 
 	    	context.push(tokenProperty);
 	    }
-	    
+
 	    var contextString = null;
 	    if (context) {
 	    	contextString = '';
@@ -117,18 +117,18 @@ PrimeFacesExt.widget.CodeMirror = PrimeFaces.widget.DeferredWidget.extend({
             update: this.id,
             formId: this.formId,
             onsuccess: function(responseXML, status, xhr) {
-                
+
             	if ($this.cfg.onsuccess) {
             		$this.cfg.onsuccess.call(this, responseXML, status, xhr);
             	}
-                
+
                 PrimeFaces.ajax.Response.handle(responseXML, status, xhr, {
                     widget: $this,
                     handle: function(content) {
                     	$this.suggestions = [];
-                    	
+
                     	var parsedSuggestions = $(content).filter(function() { return $(this).is('ul') }).children();
-                    	
+
                     	parsedSuggestions.each(function() {
                     		$this.suggestions.push($(this).html());
                     	});
@@ -136,7 +136,7 @@ PrimeFacesExt.widget.CodeMirror = PrimeFaces.widget.DeferredWidget.extend({
                     	CodeMirror.simpleHint($this.instance, PrimeFacesExt.widget.CodeMirror.getSuggestions);
                     }
                 });
-                
+
                 return true;
             }
         };
@@ -150,7 +150,7 @@ PrimeFacesExt.widget.CodeMirror = PrimeFaces.widget.DeferredWidget.extend({
         if (this.cfg.onerror) {
             options.onerror = this.cfg.onerror;
         }
-        
+
         //process
         options.process = this.cfg.process ? this.id + ' ' + this.cfg.process : this.id;
 
@@ -181,7 +181,7 @@ PrimeFacesExt.widget.CodeMirror = PrimeFaces.widget.DeferredWidget.extend({
 		    	var options = {
 		    			params: []
 		    	};
-	
+
 		    	callback.call(this, options);
 		    }
 		}
