@@ -195,7 +195,7 @@ PrimeFaces.widget.ExtCodeMirror = PrimeFaces.widget.DeferredWidget.extend({
 	}
 });
 
-PrimeFacesExt.widget.CodeMirror.getSuggestions = function(editor) {
+PrimeFaces.widget.ExtCodeMirror.getSuggestions = function(editor) {
     return {
     	list: editor.widgetInstance.suggestions,
         from: { line: editor.getCursor().line, ch: editor.widgetInstance.token.start },
