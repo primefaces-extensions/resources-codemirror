@@ -133,7 +133,7 @@ PrimeFaces.widget.ExtCodeMirror = PrimeFaces.widget.DeferredWidget.extend({
                     		$this.suggestions.push($(this).html());
                     	});
 
-                    	CodeMirror.simpleHint($this.instance, PrimeFacesExt.widget.CodeMirror.getSuggestions);
+                    	CodeMirror.showHint($this.instance, PrimeFaces.widget.ExtCodeMirror.getSuggestions);
                     }
                 });
 

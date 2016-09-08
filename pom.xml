@@ -32,9 +32,7 @@
                         <manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>
                     </archive>
                     <excludes>
-                        <exclude>**/codemirror/keymap/**</exclude>
                         <exclude>**/codemirror/lib/**</exclude>
-                        <exclude>**/codemirror/mode/dialects/**</exclude>
                         <exclude>**/codemirror/theme/**</exclude>
                         <exclude>**/codemirror/LICENSE</exclude>
                         <exclude>**/codemirror/changes.txt</exclude>
@@ -55,19 +53,6 @@
                                 <aggregation>
                                     <inputDir>${resources.dir.compressed}</inputDir>
                                     <outputFile>${resources.dir.compressed}/codemirror/codemirror.js</outputFile>
-                                    <withoutCompress>${withoutCompress}</withoutCompress>
-                                </aggregation>
-                            </aggregations>
-                        </resourcesSet>
-                        <resourcesSet>
-                            <includes>
-                                <include>codemirror/mode/modes.js</include>
-                                <include>codemirror/mode/dialects/*.js</include>
-                            </includes>
-                            <aggregations>
-                                <aggregation>
-                                    <inputDir>${resources.dir.compressed}</inputDir>
-                                    <outputFile>${resources.dir.compressed}/codemirror/mode/modes.js</outputFile>
                                     <withoutCompress>${withoutCompress}</withoutCompress>
                                 </aggregation>
                             </aggregations>
