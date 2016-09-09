@@ -32,9 +32,7 @@
                         <manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>
                     </archive>
                     <excludes>
-                        <exclude>**/codemirror/keymap/**</exclude>
                         <exclude>**/codemirror/lib/**</exclude>
-                        <exclude>**/codemirror/mode/**/LICENSE</exclude>
                         <exclude>**/codemirror/theme/**</exclude>
                         <exclude>**/codemirror/LICENSE</exclude>
                         <exclude>**/codemirror/changes.txt</exclude>
@@ -49,8 +47,6 @@
                         <resourcesSet>
                             <includes>
                                 <include>codemirror/lib/codemirror.js</include>
-                                <include>codemirror/lib/util/*.js</include>
-                                <include>codemirror/keymap/*.js</include>
                                 <include>codemirror/widget.js</include>
                             </includes>
                             <aggregations>
