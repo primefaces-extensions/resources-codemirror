@@ -8,7 +8,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>resources-codemirror</artifactId>
     <packaging>jar</packaging>
-    <name>resources-codemirror</name>
+    <name>PrimeFaces Extensions Resources CodeMirror</name>
     <description>
         <![CDATA[CodeMirror Resources for PrimeFaces Extensions Project for Maven.]]>
     </description>
